@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Creation-MMBench: Assessing Context-Aware Creative Intelligence in MLLMs">
+    <meta name="keywords" content="Creation-MMBench">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creation-MMBench</title>
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./static/css/leaderboard.css">
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/js/sort-table.js" defer></script>
+    <script src="./static/js/fontawesome.all.min.js" defer></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/explorer-index.js"></script>
+    <script src="./static/js/question_card.js"></script>
+    <script src="./static/js/leaderboard_testmini.js"></script>  
+  </head>
+
+  <body>
+  
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More Research
+            </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://mmbench-video.github.io/">
+              <b>MMBench-Video</b>
+            </a>
+            <a class="navbar-item" href="https://phoenixz810.github.io/OmniAlign-V/">
+              <b>OmniAlign-V</b>
+              <!-- <b><img src="images/omnialign-v.jpg" style="width:2.0em;vertical-align: middle" alt="Logo"/>ShareGPT4Video</b> -->
+            </a>
+            <!-- <a class="navbar-item" href="https://mmstar-benchmark.github.io/">
+              <b><img src="images/mmstar.png" style="width:2.0em;vertical-align: middle" alt="Logo"/>MMStar</b>
+            </a> -->
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-2 publication-title">Creation-MMBench: Assessing Context-Aware Creative Intelligence in MLLMs</h1>
+              <h1 class="title is-2 publication-title">(Accepted by ICCV 2025)</h1>
+              <div class="is-size-5 publication-authors">
+                <br>
+                <span class="author-block">
+                  <a href="https://scholar.google.com.hk/citations?hl=en&user=QZk6nZ8AAAAJ" style="font-weight:normal;">Xinyu Fang<b><sup>*1,2</sup></b></a>,
+                </span>
+                <span class="author-block">
+                  <a href="https://github.com/Jelly-Roger" style="font-weight:normal;">Zhijian Chen<b><sup>*3</sup></b></a>,
+                </span>
+                <span class="author-block">
+                  <a href="" style="font-weight:normal;">Kai Lan<sup>3</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="" style="font-weight:normal;">Lixin Ma<sup>3</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="https://github.com/SYuan03" style="font-weight:normal;">Shengyuan Ding<sup>2,4</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="" style="font-weight:normal;">Yingji Liang<sup>5</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="https://github.com/PhoenixZ810/" style="font-weight:normal;">Xiangyu Zhao<sup>2,6</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="" style="font-weight:normal;">Farong Wen<sup>6</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="https://zzc-1998.github.io/" style="font-weight:normal;">Zicheng Zhang<sup>2,6</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="http://www.cad.zju.edu.cn/home/gfzhang/" style="font-weight:normal;">Guofeng Zhang<sup>1</sup></a>,
+                </span>
+                <span class="author-block">
+                  <a href="https://kennymckormick.github.io/" style="font-weight:normal;">Haodong Duan<b><sup>&dagger;2</sup></b></a>,
+                <span class="author-block">
+                  <a href="https://chenkai.site/" style="font-weight:normal;">Kai Chen<b><sup>&dagger;2</sup></b></a>,
+                </span>
+                <span class="author-block">
+                  <a href="http://dahua.site/" style="font-weight:normal;">Dahua Lin<sup>2,7</sup></a>
+                </span>
+                
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><b style="color:#008AD7; font-weight:normal">&#x25B6 </b> <sup>1</sup> Zhejiang University </span>
+                <span class="author-block"><b style="color:#fa7f6f; font-weight:normal">&#x25B6 </b> <sup>2 </sup> Shanghai AI Laboratory</span>
+                <span class="author-block"><b style="color:#f68946; font-weight:normal">&#x25B6 </b> <sup>3 </sup> Tongji University</span>
+                <span class="author-block"><b style="color:#008AD7; font-weight:normal">&#x25B6 </b> <sup>4</sup> Nanjing University </span>
+                <span class="author-block"><b style="color:#fa7f6f; font-weight:normal">&#x25B6 </b> <sup>5 </sup> East China Normal University</span>
+                <span class="author-block"><b style="color:#f68946; font-weight:normal">&#x25B6 </b> <sup>6 </sup> Shanghai Jiao Tong University</span>
+                <span class="author-block"><b style="color:#008AD7; font-weight:normal">&#x25B6 </b> <sup>7 </sup> The Chinese University of Hong Kong</span>
+              </div>
+              
+              <div class="is-size-6 publication-authors">
+                <br>
+                <span class="author-block"><b>*</b> Equal contribution.</span>
+                <span class="author-block"><b>&dagger;</b> Corresponding authors.</span>
+              </div>
+              
+              <!-- <div class="is-size-6 publication-authors">
+                <span class="author-block"><b><sup>&sect;</sup></b> Work done during an internship in Shanghai AI Laboratory.</span>
+              </div> -->
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2503.14478" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://github.com/open-compass/Creation-MMBench" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Guide</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/opencompass/Creation-MMBench" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <p style="font-size:18px">🤗</p>
+                      </span>
+                      <span>Dataset</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://github.com/open-compass/VLMEvalKit" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <p style="font-size:18px">🛠️</p>
+                      </span>
+                      <span>Evaluation</span>
+                    </a>
+                  </span>
+                </div>
+                <div style="text-align: left;">
+                <font size="3">
+                  <br>🚀 <b>Creation-MMBench: </b> A multimodal benchmark specifically designed to evaluate the <b>creative capabilities</b> of MLLMs.
+                  <br>🚀 Include <b>original, high-quality</b> visual questions crafted by volunteers, spanning <b>4 categories</b> and <b>51 fine-grained tasks</b>.
+                  <br>🚀 Design a robust <b>MLLM-as-a-judge</b> evaluation methodology, consisting of <b>Unitary Scoring</b> and <b>Pairwise Comparison</b>.
+                  <br>🚀 Propose <b>Creation-MMBench-TO</b>, a text-only variant, to further explore the impact of <b>visual instruction tuning</b>.
+                </font>
+                </div>
+                <br>
+                <font size="6">
+                  <br>🔥<b>What's New</b>
+                </font>
+                <font size="4">
+                  <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0"><tbody>
+                    <tr>
+                      <td>
+                        <div  align="left" style="height: 140px; overflow: auto;">
+                          <ul>
+                            <li> <b style="color:#E68E34">[2025.03.18]</b> The <b>Creation-MMBench Dataset, WebPage and Evaluation Code </b> is all released!</b>
+                            <li> <b style="color:#E68E34">[2025.03.19]</b> The <b>Creation-MMBench Paper</b> is released! Check it! 🎉🎉🎉
+                            <li> <b style="color:#E68E34">[2025.06.26]</b> The <b>Creation-MMBench</b> has been accepted at <b> ICCV 2025 </b>! See you in Hawaii! 🎉🎉🎉
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody></table>
+                </font>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="Abstract">
+      <div class="container" style="margin-bottom: 2vh;">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                <b>Creativity</b> is a fundamental aspect of intelligence, involving the ability to generate novel and appropriate solutions across diverse contexts. While 
+                Large Language Models <b>(LLMs)</b> have been extensively evaluated for their creative capabilities, the assessment of Multimodal Large Language Models <b>(MLLMs)</b> 
+                in this domain remains <b>largely unexplored</b>. To address this gap, we introduce <b>Creation-MMBench</b>, a multimodal benchmark specifically designed
+                to evaluate the creative capabilities of MLLMs in <b>real-world, image-based</b> tasks. The benchmark comprises <b>765 test cases</b> spanning <b>51 fine-grained tasks</b>. 
+                To ensure rigorous evaluation, we define <b>instance-specific</b> evaluation criteria for each test case, guiding the assessment of both general response quality and factual consistency 
+                with visual inputs. Experimental results reveal that current open-source MLLMs significantly underperform compared to proprietary models in creative tasks. 
+                Furthermore, our analysis demonstrates that <b>visual fine-tuning</b> can negatively impact the base LLM's creative abilities. Creation-MMBench provides valuable insights
+                for advancing MLLM creativity and establishes a foundation for future improvements in multimodal generative intelligence. Full data and evaluation
+                code is released on <a href="https://github.com/open-compass/Creation-MMBench/">Creation-MMBench</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    
+    <section class="hero is-light is-small" id="Dataset Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">Our Motivation</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Dataset">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+
+              <div class="content has-text-justified">
+              <p><strong>1. Lack of Multimodal Creative Benchmarks:</strong></p>
+              <p>
+                As a well-established theory in psychology, the Triarchic Theory of Intelligence comprises three subtheories: <b>the analytical subtheory, the contextual subtheory, and the creative subtheory</b>.
+                The analytical subtheory primarily focuses on information processing and problem-solving skills based on domain-specific knowledge and can be assessed through various knowledge and reasoning benchmarks.
+                The contextual subtheory, on the other hand, emphasizes practical intelligence in real-world scenarios and is typically evaluated using agent-based or embodied AI benchmarks. 
+                Despite <b>the significance of the creative subtheory in intelligence</b>, evaluations of MLLMs' creative capabilities remain <b>highly inadequate and lag significantly behind those conducted for LLMs</b>. 
+              </p>
+              
+              <p><strong>2. Limited Capabilities of Existing Benchmarks:</strong></p>
+              <p>
+                MLLMs have certain shortcomings in dealing with creative tasks in daily situation. However, existing
+                benchmarks feature simple questions that fail to assess model performance in real-life creative tasks.
+              </p>
+
+              <br>
+              <centering>
+                <div style="text-align: center;"><img id="captioner" width="100%" src="images/spotlight-v5.png"></div>
+                <!-- <div style="text-align: left;">
+                  <p style="font-family:Times New Roman">
+                    <font size=4>
+                      <b>Our Motivation for Creation-MMBench.</b> The triarchic theory of intelligence divides intelligence into three forms. 
+                      Current MLLM benchmarks have significant gaps in evaluating <b>visual-creative intelligence</b> compared to the other forms. 
+                      Additionally, existing benchmarks feature <b>simple questions</b> that fail to assess model performance in real-life creative tasks. 
+                      Therefore, we proposed <b>Creation-MMBench</b>, which includes four categories, more creative and discriminative questions, and 
+                      better evaluation of visual creative intelligence.
+                    </font>
+                  </p>
+                </div> -->
+              </centering>
+              <br>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="hero is-light is-small" id="Captioner Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">Overview of Creation-MMBench</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Captioner">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+
+              <centering>
+                <div style="text-align: center;"><img id="captioner" width="90%" src="images/task-diagram-formal.png"></div>
+                <div style="text-align: left;">
+                  <p style="font-family:Times New Roman">
+                    <font size=4>
+                      <b>Overview of Creation-MMBench.</b>
+                      Contain four task categories: Literary Writing, Common Functional Writing, Professional Functional Writing, and Creative Multimodal Understanding. 
+                      Each category consists of multiple tasks, and the types of images are diverse. 
+                      Only a few representative tasks of each category are shown here. Complete list of tasks is detailed in Appendix A.
+                    </font>
+                  </p>
+                </div>
+              </centering>
+              <br>
+
+                    
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="hero is-light is-small" id="Dataset Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">Benchmark Comparision and Statistics</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Dataset">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+
+              <div class="content has-text-justified">
+              
+
+              <centering>
+                
+                <div class="column is-six-fifths" width="100%">
+                  <p><strong>Comparison of Creation-MMBench with other partial-creation MLLM benchmarks:</strong></p>
+                  <table class="table is-striped js-sort-table" id="results">
+                    <thead>
+                      <tr>
+                        <th><strong>Benchmarks</strong></th>
+                        <th><strong>Num of Creative Questions</strong></th>
+                        <th><strong>Criteria Level</strong></th>
+                        <th><strong>Multi-images Task</strong></th>
+                        <th><strong>Specific Role for each Question</strong></th>
+                        <th><strong>Visual Factuality Check</strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>VisIT-Bench</td>
+                        <td>65</td>
+                        <td>benchmark</td>
+                        <td>✔</td>
+                        <td>✘</td>
+                        <td>✔</td>
+                      </tr>
+                      <tr>
+                        <td>MLLM-Bench</td>
+                        <td>20</td>
+                        <td>instance</td>
+                        <td>✘</td>
+                        <td>✘</td>
+                        <td>✔</td>
+                      </tr>
+                      <tr>
+                        <td>Touch-Stone</td>
+                        <td>189</td>
+                        <td>benchmark</td>
+                        <td>✔</td>
+                        <td>✘</td>
+                        <td>✘</td>
+                      </tr>
+                      <tr>
+                        <td>AlignMMbench</td>
+                        <td>353</td>
+                        <td>task</td>
+                        <td>✘</td>
+                        <td>✘</td>
+                        <td>✘</td>
+                      </tr>
+                      <tr>
+                        <td><u><b>Creation-MMBench</b></u></td>
+                        <td><u><b>765</b></u></td>
+                        <td><u><b>instance</b></u></td>
+                        <td><u><b>✔</b></u></td>
+                        <td><u><b>✔</b></u></td>
+                        <td><u><b>✔</b></u></td>
+                      </tr>
+                    </tbody>
+                  </table>
+          
+                  <br>
+                  <p><strong>Statistics and Cases of Creation-MMBench:</strong></p>
+                  <div style="display: flex; align-items: flex-start; gap:15px">
+                    <!-- 左侧两张图片（竖排） -->
+                    <div style="width: 25%;">
+                        <img width="100%" src="images/prompt_len.png" alt="Distribution of query lengths">
+                        <p style="font-family:Times New Roman; text-align: center;">
+                            <font size="3">(a) Distribution of query lengths.</font>
+                        </p>
+                        <img width="100%" src="images/role_cloud.png" alt="Roles in Creation-MMBench">
+                        <p style="font-family:Times New Roman; text-align: center;">
+                            <font size="3">(b) Roles in Creation-MMBench.</font>
+                        </p>
+                    </div>
+                
+                    <!-- 右侧大图 -->
+                    <div style="width: 74%;">
+                        <img width="100%" src="images/data-example-v2.png" alt="Example Case of Creation-MMBench">
+                        <p style="font-family:Times New Roman; text-align: center;">
+                            <font size="3">(c) Example Case of Creation-MMBench.</font>
+                        </p>
+                    </div>
+                    
+                </div>
+                <p style="font-family:Times New Roman; text-align: left;">
+                  <font size="4">
+                      <b>Statistics and Cases of Creation-MMBench:</b> Compared to other widely used MLLM benchmarks, 
+                      Creation-MMBench features a <b>more comprehensive query</b> design to capture abundant creative contexts. 
+                      <b>Diverse roles</b> are introduced into the queries to stimulate MLLMs' utilization of disciplinary and 
+                      prior knowledge. As an MLLM benchmark, Creation-MMBench includes a <b>rich variety of images</b> to 
+                      thoroughly evaluate multiple capabilities of MLLMs.
+                  </font>
+              </p>
+                
+                  </div>
+              </centering>
+              <br>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+
+    <section class="hero is-light is-small" id="Captioner Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">Creation-MMBench Leaderboard</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Leaderboard">
+      <div class="container"> 
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered content">
+            <div class="content">
+              <p>VFS stands for Visual Factuality Score. <b>LW, CFW, PFW, and CMU</b> stand for four categories in Creation-MMBench: <b>Literary Writing, Common Functional Writing, Professional Functional Writing, and Creative Multimodal Understanding</b>.</p>
+              <p><b>OC Score</b> represents the average score of the OpenVLM Leaderboard and mainly demonstrates the objective performance of the model.</p>
+              <p>The token number is calculated with tiktoken GPT-4o-1120 tokenizer.</p>
+              <p>The <b>best</b> results are highlighted in <b>bold</b>.</p>
+              <table class="table is-striped js-sort-table" id="results">
+                <thead>
+                  <tr>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Model</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>Overall</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>LW</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>CFW</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>PFW</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>CMU</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>OC Score</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Avg Tokens</strong></th>
+                  </tr>
+                  <tr>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="13" style="text-align: center;"><em>Proprietary MLLMs</em></td>
+                  </tr>
+                  <tr>
+                    <td>Gemini-2.0-pro-exp</td>
+                    <td>8.53</td>
+                    <td><b>4.48</b></td>
+                    <td><b>8.66</b></td>
+                    <td><b>-1.88</b></td>
+                    <td>8.98</td>
+                    <td><b>12.71</b></td>
+                    <td>8.01</td>
+                    <td><b>3.33</b></td>
+                    <td>8.65</td>
+                    <td>-8.06</td>
+                    <td><b>73.4</b></td>
+                    <td><b>718</b></td>
+                  </tr>
+                  <tr>
+                    <td><b>GPT-4o-1120 [Baseline]</b></td>
+                    <td>8.72</td>
+                    <td>0.00</td>
+                    <td>8.86</td>
+                    <td>0.00</td>
+                    <td>8.93</td>
+                    <td>0.00</td>
+                    <td>8.26</td>
+                    <td>0.00</td>
+                    <td>9.38</td>
+                    <td>0.00</td>
+                    <td>72.0</td>
+                    <td>497</td>
+                  </tr>
+                  <tr>
+                    <td>Gemini-1.5-pro-002</td>
+                    <td>8.41</td>
+                    <td>-5.49</td>
+                    <td><b>8.66</b></td>
+                    <td>-6.04</td>
+                    <td>8.59</td>
+                    <td>-2.04</td>
+                    <td><b>8.05</b></td>
+                    <td>-4.82</td>
+                    <td>8.75</td>
+                    <td>-17.22</td>
+                    <td>72.2</td>
+                    <td>444</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-4.5-0227</td>
+                    <td><b>8.54</b></td>
+                    <td>-5.88</td>
+                    <td>8.63</td>
+                    <td>-4.38</td>
+                    <td>8.76</td>
+                    <td>-8.33</td>
+                    <td><b>8.05</b></td>
+                    <td>-5.88</td>
+                    <td><b>9.29</b></td>
+                    <td><b>-0.56</b></td>
+                    <td>/</td>
+                    <td>394</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-4o-mini</td>
+                    <td>8.07</td>
+                    <td>-13.56</td>
+                    <td>8.30</td>
+                    <td>-4.38</td>
+                    <td>8.44</td>
+                    <td>-15.28</td>
+                    <td>7.50</td>
+                    <td>-16.05</td>
+                    <td>8.40</td>
+                    <td>-12.78</td>
+                    <td>64.1</td>
+                    <td>436</td>
+                  </tr>
+                  <tr>
+                    <td>Doubao-VL</td>
+                    <td>8.38</td>
+                    <td>-14.09</td>
+                    <td>8.28</td>
+                    <td>-19.17</td>
+                    <td><b>9.01</b></td>
+                    <td>-3.33</td>
+                    <td>7.65</td>
+                    <td>-18.72</td>
+                    <td>8.77</td>
+                    <td>-25.00</td>
+                    <td>/</td>
+                    <td>516</td>
+                  </tr>
+                  <tr>
+                    <td>Claude-3.5-Sonnet</td>
+                    <td>7.96</td>
+                    <td>-15.46</td>
+                    <td>8.44</td>
+                    <td>-16.46</td>
+                    <td>7.45</td>
+                    <td>-21.57</td>
+                    <td>7.98</td>
+                    <td>-11.14</td>
+                    <td>8.88</td>
+                    <td>-9.44</td>
+                    <td>70.6</td>
+                    <td>336</td>
+                  </tr>
+                  <tr>
+                    <td>Moonshot-v1-32k-vision</td>
+                    <td>7.43</td>
+                    <td>-20.58</td>
+                    <td>7.30</td>
+                    <td>-21.46</td>
+                    <td>8.20</td>
+                    <td>-8.80</td>
+                    <td>6.91</td>
+                    <td>-26.50</td>
+                    <td>6.91</td>
+                    <td>-36.11</td>
+                    <td>/</td>
+                    <td>485</td>
+                  </tr>
+                  <tr>
+                    <td colspan="13" style="text-align: center;"><em>Open-Source MLLMs</em></td>
+                  </tr>
+                  <tr>
+                    <td><b>Qwen2.5-VL-72B-Instruct</b></td>
+                    <td><b>8.33</b></td>
+                    <td><b>-5.82</b></td>
+                    <td>8.04</td>
+                    <td>-10.83</td>
+                    <td><b>8.91</b></td>
+                    <td><b>4.44</b></td>
+                    <td><b>7.68</b></td>
+                    <td><b>-11.49</b></td>
+                    <td><b>8.86</b></td>
+                    <td><b>-11.94</b></td>
+                    <td>76.1</td>
+                    <td><b>553</b></td>
+                  </tr>
+                  <tr>
+                    <td>InternVL2.5-78B-MPO</td>
+                    <td>8.06</td>
+                    <td>-12.55</td>
+                    <td><b>8.22</b></td>
+                    <td><b>-9.17</b></td>
+                    <td>8.60</td>
+                    <td>-5.00</td>
+                    <td>7.45</td>
+                    <td>-16.32</td>
+                    <td>8.22</td>
+                    <td>-27.78</td>
+                    <td><b>77.0</b></td>
+                    <td>461</td>
+                  </tr>
+                  <tr>
+                    <td>InternVL2.5-8B-MPO</td>
+                    <td>7.65</td>
+                    <td>-15.10</td>
+                    <td>8.09</td>
+                    <td>-16.25</td>
+                    <td>8.30</td>
+                    <td>-3.80</td>
+                    <td>6.80</td>
+                    <td>-23.95</td>
+                    <td>7.88</td>
+                    <td>-19.44</td>
+                    <td>70.3</td>
+                    <td>548</td>
+                  </tr>
+                  <tr>
+                    <td>InternVL2.5-78B</td>
+                    <td>7.91</td>
+                    <td>-16.43</td>
+                    <td>8.05</td>
+                    <td>-17.50</td>
+                    <td>8.45</td>
+                    <td>-7.69</td>
+                    <td>7.26</td>
+                    <td>-20.53</td>
+                    <td>8.18</td>
+                    <td>-28.33</td>
+                    <td>75.2</td>
+                    <td>473</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2-VL-72B-instruct</td>
+                    <td>7.87</td>
+                    <td>-22.45</td>
+                    <td>7.75</td>
+                    <td>-24.58</td>
+                    <td>8.17</td>
+                    <td>-15.56</td>
+                    <td>7.42</td>
+                    <td>-26.84</td>
+                    <td>8.43</td>
+                    <td>-26.39</td>
+                    <td>74.8</td>
+                    <td>439</td>
+                  </tr>
+                  <tr>
+                    <td>InternVL2.5-8B</td>
+                    <td>7.38</td>
+                    <td>-25.42</td>
+                    <td>7.91</td>
+                    <td>-23.33</td>
+                    <td>7.95</td>
+                    <td>-15.83</td>
+                    <td>6.62</td>
+                    <td>-33.95</td>
+                    <td>7.45</td>
+                    <td>-30.00</td>
+                    <td>68.1</td>
+                    <td>500</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2.5-VL-7B-Instruct</td>
+                    <td>7.55</td>
+                    <td>-29.80</td>
+                    <td>7.34</td>
+                    <td>-39.38</td>
+                    <td>8.40</td>
+                    <td>-21.67</td>
+                    <td>6.71</td>
+                    <td>-33.25</td>
+                    <td>7.78</td>
+                    <td>-30.56</td>
+                    <td>70.9</td>
+                    <td>510</td>
+                  </tr>
+                  <tr>
+                    <td>MiniCPM-o-2.6</td>
+                    <td>7.49</td>
+                    <td>-34.77</td>
+                    <td>7.79</td>
+                    <td>-35.42</td>
+                    <td>7.95</td>
+                    <td>-27.31</td>
+                    <td>6.76</td>
+                    <td>-40.88</td>
+                    <td>8.08</td>
+                    <td>-36.94</td>
+                    <td>70.2</td>
+                    <td>389</td>
+                  </tr>
+                  <tr>
+                    <td>DeepSeek-VL2</td>
+                    <td>7.24</td>
+                    <td>-38.52</td>
+                    <td>7.58</td>
+                    <td>-33.75</td>
+                    <td>7.58</td>
+                    <td>-32.50</td>
+                    <td>6.61</td>
+                    <td>-44.02</td>
+                    <td>7.81</td>
+                    <td>-45.56</td>
+                    <td>66.4</td>
+                    <td>440</td>
+                  </tr>
+                  <tr>
+                    <td>LLaVA-OneVision-72B</td>
+                    <td>7.16</td>
+                    <td>-39.87</td>
+                    <td>7.26</td>
+                    <td>-36.32</td>
+                    <td>7.72</td>
+                    <td>-30.61</td>
+                    <td>6.43</td>
+                    <td>-47.98</td>
+                    <td>7.62</td>
+                    <td>-46.37</td>
+                    <td>68.0</td>
+                    <td>315</td>
+                  </tr>
+                  <tr>
+                    <td>LLaVA-OneVision-7B</td>
+                    <td>6.75</td>
+                    <td>-43.49</td>
+                    <td>7.36</td>
+                    <td>-43.54</td>
+                    <td>7.27</td>
+                    <td>-31.85</td>
+                    <td>6.04</td>
+                    <td>-50.53</td>
+                    <td>6.82</td>
+                    <td>-56.11</td>
+                    <td>60.2</td>
+                    <td>373</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2-VL-7B-instruct</td>
+                    <td>7.12</td>
+                    <td>-43.76</td>
+                    <td>6.99</td>
+                    <td>-55.83</td>
+                    <td>7.67</td>
+                    <td>-36.30</td>
+                    <td>6.57</td>
+                    <td>-45.26</td>
+                    <td>7.25</td>
+                    <td>-45.28</td>
+                    <td>67.1</td>
+                    <td>456</td>
+                  </tr>
+                  <tr>
+                    <td>VITA-1.5</td>
+                    <td>6.43</td>
+                    <td>-53.31</td>
+                    <td>6.77</td>
+                    <td>-46.19</td>
+                    <td>7.23</td>
+                    <td>-46.50</td>
+                    <td>5.70</td>
+                    <td>-57.43</td>
+                    <td>6.22</td>
+                    <td>-69.72</td>
+                    <td>63.3</td>
+                    <td>385</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <div style="text-align: center;"><img id="captioner" width="75%" src="images/oc_score.png"></div>
+                <div style="text-align: left;">
+                  <p style="font-family:Times New Roman">
+                    <font size=4>
+                      <b>Comparing OC Score and Creation-MMBench Reward.</b> 
+                      This figure shows the model performance on the OpenVLM Leaderboard and Creation-MMBench, highlighting a significant
+                      gap between objective performance and visual creativity in some open-source models.
+                    </font>
+                  </p>
+                </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="hero is-light is-small" id="Captioner Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">Creation-MMBench-TO Results</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Leaderboard">
+      <div class="container"> 
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered content">
+            <div class="content">
+              <p>LLM performance on Creation-MMBench-TO and Visual Instruction Tuning Impact on VLM creation capability.</p>
+              <table class="table is-striped js-sort-table" id="results">
+                <thead>
+                  <tr>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>VLM</strong></th>
+                    <th rowspan="2" style="vertical-align: middle;"><strong>Corresponding LLM</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>Text Input w. LLM</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>Text Input w. VLM</strong></th>
+                    <th colspan="2" style="text-align: center;"><strong>Vision+Text Input w. VLM</strong></th>
+                  </tr>
+                  <tr>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                    <th style="text-align: center;"><strong>VFS</strong></th>
+                    <th style="text-align: center;"><strong>Reward</strong></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>GPT-4o-1120</td>
+                    <td>GPT-4o-1120</td>
+                    <td><b>8.71</b></td>
+                    <td><b>6.96</b></td>
+                    <td><b>8.71</b></td>
+                    <td><b>6.96</b></td>
+                    <td><b>8.72</b></td>
+                    <td>0.36</td>
+                  </tr>
+                  <tr>
+                    <td>Gemini-2.0-pro-exp</td>
+                    <td>Gemini-2.0-pro-exp</td>
+                    <td>8.49</td>
+                    <td>4.08</td>
+                    <td>8.49</td>
+                    <td>4.08</td>
+                    <td>8.53</td>
+                    <td><b>4.48</b></td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2.5-VL-72B-Instruct</td>
+                    <td>Qwen2.5-72B-Instruct</td>
+                    <td>8.55</td>
+                    <td>0.82</td>
+                    <td>8.51</td>
+                    <td>-4.05</td>
+                    <td>8.33</td>
+                    <td>-5.82</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen2.5-VL-7B-Instruct</td>
+                    <td>Qwen2.5-7B-Instruct</td>
+                    <td>8.18</td>
+                    <td>-19.18</td>
+                    <td>7.97</td>
+                    <td>-27.50</td>
+                    <td>7.55</td>
+                    <td>-29.80</td>
+                  </tr>
+                  <tr>
+                    <td>MiniCPM-o-2.6</td>
+                    <td>Qwen2.5-7B-Instruct</td>
+                    <td>8.18</td>
+                    <td>-19.18</td>
+                    <td>7.78</td>
+                    <td>-36.57</td>
+                    <td>7.49</td>
+                    <td>-34.77</td>
+                  </tr>
+                  <tr>
+                    <td>InternVL2.5-8B</td>
+                    <td>InternLM2.5-7B-Chat</td>
+                    <td>7.83</td>
+                    <td>-22.19</td>
+                    <td>7.92</td>
+                    <td>-28.73</td>
+                    <td>7.38</td>
+                    <td>-25.42</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="hero is-light is-small" id="Captioner Title">
+      <div class="hero-body has-text-centered">
+        <h1 class="title is-2">
+          <span style="vertical-align: middle">More Example Cases</span>
+        </h1>
+      </div>
+    </section>
+    <section class="section" id="Captioner">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+
+              <centering>
+                <div style="text-align: center;"><img id="captioner" width="90%" src="images/LW_story_continue.png"></div>
+                <br>
+                <div style="text-align: center;"><img id="captioner" width="90%" src="images/CMU_document_understanding.png"></div>
+                <br>
+                <div style="text-align: center;"><img id="captioner" width="90%" src="images/CMU_snapshot_analysis.png"></div>
+                </div>
+              </centering>
+              <br>
+
+                    
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3 has-text-centered">📃 BibTeX</h2>
+        <pre><code>
+          @misc{fang2025creationmmbenchassessingcontextawarecreative,
+                title={Creation-MMBench: Assessing Context-Aware Creative Intelligence in MLLM}, 
+                author={Xinyu Fang and Zhijian Chen and Kai Lan and Lixin Ma and Shengyuan Ding and Yingji Liang and Xiangyu Zhao and Farong Wen and Zicheng Zhang and Guofeng Zhang and Haodong Duan and Kai Chen and Dahua Lin},
+                year={2025},
+                eprint={2503.14478},
+                archivePrefix={arXiv},
+                primaryClass={cs.CV},
+                url={https://arxiv.org/abs/2503.14478}, 
+          }
+        </code></pre>
+        <br>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website template is adapted from <a href="https://sharegpt4v.github.io/">ShareGPT4V</a>, <a href="https://mmstar-benchmark.github.io/">MMStar</a> and <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>
+            </p>
+            <div style="display: flex; justify-content: center; width: 100%;">
+              <div style="width: 30%; text-align: center;">
+                <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=-nEGFcrT3lBvdQpfAmpyEUP0MhQzB6pgIuSH8AUU-Os&cl=ffffff&w=a"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    </body>
+    </html>
